@@ -52,6 +52,8 @@ function Learn() {
         onChange={handleChange}
       />
       <Button value="submit" onClick={handleSubmit} />
+
+      <div></div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import InputField from "./Input";
 import Button from "./Button";
 import { useState } from "react";
+import "../App.css";
 
 interface forinput {
   age?: string | undefined;
@@ -9,9 +10,9 @@ interface forinput {
 }
 function Learn() {
   const [formData, updateFormData] = useState<forinput>({
-    age: undefined,
-    lastname: undefined,
     firstname: undefined,
+    lastname: undefined,
+    age: undefined,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +23,14 @@ function Learn() {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     console.log(formData);
-    console.log(e.target.name, e.target.value);
+    // console.log(e.target.name, e.target.value);
   };
   return (
     <div>
+      <h2>form</h2>
       <InputField
         inputType="firstname"
         placeholder="firstname"

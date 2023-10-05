@@ -3,7 +3,7 @@ interface InputProps {
   inputType?: string;
   placeholder: string;
   name: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 class InputField extends Component<InputProps> {
   render() {

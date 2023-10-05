@@ -9,11 +9,13 @@ interface forinput {
   firstname: string | undefined;
 }
 function Learn() {
-  const [formData, updateFormData] = useState<forinput>({
-    firstname: undefined,
-    lastname: undefined,
-    age: undefined,
-  });
+  const [formData, updateFormData] = useState<forinput[]>([
+    {
+      firstname: undefined,
+      lastname: undefined,
+      age: undefined,
+    },
+  ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateFormData({
@@ -53,7 +55,14 @@ function Learn() {
       />
       <Button value="submit" onClick={handleSubmit} />
 
-      <div></div>
+      {/* {formData.map((formData, index) => {
+        return (
+          <ul>
+            key={index}
+            <li>id: {formData.firstname}</li>
+          </ul>
+        );
+      })} */}
     </div>
   );
 }

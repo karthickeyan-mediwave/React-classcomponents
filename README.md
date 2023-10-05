@@ -1,6 +1,6 @@
-## React form by using class and function components
+## React movie app
 
-#### using props,interface,constructor
+#### Using formik and yup validation
 
 ##### To run
 
@@ -10,5 +10,3 @@
 $ npm run dev
 
 ```
-
--hiiiii

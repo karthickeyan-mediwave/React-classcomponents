@@ -31,6 +31,7 @@ const App = () => {
       };
       setMovieList([...movieList, newMovie]);
       formik.resetForm();
+      console.log(values);
     },
   });
 

@@ -1,9 +1,12 @@
-import "./App.css";
-import Test from "./components/Test";
+// import Crud from "./components/Crud";
+import Workout from "./components/Workout";
+// import Test from "./components/Test";
 function App() {
   return (
     <>
-      <Test />
+      {/* <Crud /> */}
+      {/* <Test /> */}
+      <Workout />
     </>
   );
 }

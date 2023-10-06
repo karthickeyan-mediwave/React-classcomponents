@@ -1,6 +1,6 @@
-## React movie app
+## React CRUD
 
-#### Using formik and yup validation
+#### To create , update and delete
 
 ##### To run
 

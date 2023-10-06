@@ -35,57 +35,59 @@ const App = () => {
   });
 
   return (
-    <div>
-      <h1>Movie form</h1>
-      <form onSubmit={formik.handleSubmit} id="formid">
-        <div>
-          <label>Movie Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.name}
-          />
-          {formik.touched.name && formik.errors.name ? (
-            <div className="error">{formik.errors.name}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>Rating</label>
-          <input
-            type="number"
-            id="rating"
-            name="rating"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.rating}
-          />
-          {formik.touched.rating && formik.errors.rating ? (
-            <div className="error">{formik.errors.rating}</div>
-          ) : null}
-        </div>
-        <div>
-          <label>Movie URL</label>
-          <input
-            type="text"
-            id="url"
-            name="url"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.url}
-          />
-          {formik.touched.url && formik.errors.url ? (
-            <div className="error">{formik.errors.url}</div>
-          ) : null}
-        </div>
-        <button type="submit">Add Movie</button>
-      </form>
+    <div className="movie-div">
+      <div className="container">
+        <h1 className="head">Movie form</h1>
+        <form onSubmit={formik.handleSubmit} id="formid">
+          <div>
+            <label>Movie Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+            />
+            {formik.touched.name && formik.errors.name ? (
+              <div className="error">{formik.errors.name}</div>
+            ) : null}
+          </div>
+          <div>
+            <label>Rating</label>
+            <input
+              type="number"
+              id="rating"
+              name="rating"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.rating}
+            />
+            {formik.touched.rating && formik.errors.rating ? (
+              <div className="error">{formik.errors.rating}</div>
+            ) : null}
+          </div>
+          <div>
+            <label>Movie URL</label>
+            <input
+              type="text"
+              id="url"
+              name="url"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.url}
+            />
+            {formik.touched.url && formik.errors.url ? (
+              <div className="error">{formik.errors.url}</div>
+            ) : null}
+          </div>
+          <button type="submit">Add Movie</button>
+        </form>
+      </div>
 
       {movieList.length > 0 && (
         <div className="movielist">
-          <h2>Movie List:</h2>
+          <h2>Movie List</h2>
           <div className="movie-list">
             {movieList.map((movie, index) => (
               <div className="movie-card" key={index}>

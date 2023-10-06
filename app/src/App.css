@@ -1,15 +1,12 @@
-* {
+html {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  background: #24b99c !important;
 }
 
 body {
-  background-color: #f0f0f0;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   height: 100vh;
-  /* margin: 0; */
   display: block !important;
 }
 
@@ -20,8 +17,19 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
-h1 {
+.container {
+  max-width: 440px;
+  margin: 170px auto;
+  background: white;
+  border-radius: 10px;
+}
+.head {
   text-align: center;
+  background: #16a085;
+  margin: 0;
+  padding: 20px;
+  font-size: 40px !important;
+  color: white;
 }
 
 .form-heading {
@@ -51,7 +59,7 @@ textarea {
 }
 
 button[type="submit"] {
-  background-color: #007bff;
+  background: #16a085;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -59,6 +67,7 @@ button[type="submit"] {
   cursor: pointer;
   margin-left: 80px;
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .error {
@@ -75,10 +84,11 @@ button[type="submit"] {
   display: flex;
   padding: 10px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .movie-card {
-  width: 150px;
+  width: 200px;
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -88,7 +98,10 @@ button[type="submit"] {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 10px;
 }
-
+h2 {
+  color: white;
+  text-align: center;
+}
 .movie-card h1 {
   font-size: 25px;
   margin-bottom: 10px;

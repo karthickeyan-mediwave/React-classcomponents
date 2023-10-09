@@ -1,6 +1,14 @@
 import React from "react";
 
-function CustomInput({ title, placeholder, onchange, value, name, type }) {
+function CustomInput({
+  title,
+  placeholder,
+  onchange,
+  value,
+  name,
+  type,
+  className,
+}) {
   return (
     <div>
       <span>{title} : </span>
@@ -10,6 +18,7 @@ function CustomInput({ title, placeholder, onchange, value, name, type }) {
         onChange={onchange}
         value={value}
         name={name}
+        className={className}
       />
     </div>
   );

@@ -5,7 +5,7 @@ const LikeApp = () => {
   const initiallikes = JSON.parse(localStorage.getItem("likes"));
   const [likes, setlikes] = useState(initiallikes);
   const [text, setText] = useState("");
-  const [editIndex, setEditIndex] = useState(-1);
+  const [editIndex, setEditIndex] = useState();
   const [editText, setEditText] = useState("");
 
   // Load likes from local storage when the component mounts
@@ -36,7 +36,7 @@ const LikeApp = () => {
       );
 
       setlikes(updatedlikes);
-      setEditIndex(-1);
+      setEditIndex();
       setEditText("");
     }
   };
@@ -50,40 +50,62 @@ const LikeApp = () => {
   }
 
   return (
-    <div>
+    <div className="mainDiv">
       <h1>Like App</h1>
       <CustomInput
-        placeholder={"enter the likes "}
+        placeholder={"Enter the likes here"}
         title={"Likes"}
         onchange={onchange}
         value={text}
         name={"color"}
         type={"text"}
+        className={"Addinput"}
       />
-      <button onClick={addlike}>Add</button>
-      <ul>
-        {likes.map((like) => (
-          <li key={like.id}>
-            {editIndex === like.id ? (
-              <div>
-                <input
-                  type="text"
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                />
-                <button onClick={() => updatelike(like.id)}>Update</button>
-                <button onClick={() => setEditIndex(-1)}>Cancel</button>
-              </div>
-            ) : (
-              <div>
-                <p>{like.text}</p>
-                <button onClick={() => setEditIndex(like.id)}>Edit</button>
-                <button onClick={() => deletelike(like.id)}>Delete</button>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+      <button onClick={addlike} className="addbtn">
+        Add
+      </button>
+      <div className="returnDiv">
+        <ul>
+          {likes.map((like) => (
+            <li key={like.id}>
+              {editIndex === like.id ? (
+                <div>
+                  <input
+                    type="text"
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                  />
+                  <button
+                    onClick={() => updatelike(like.id)}
+                    className="update-btn"
+                  >
+                    Update
+                  </button>
+                  <button onClick={() => setEditIndex()} className="cancel-btn">
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <p>{like.text}</p>
+                  <button
+                    onClick={() => setEditIndex(like.id)}
+                    className="edit-btn"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => deletelike(like.id)}
+                    className="del-btn"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

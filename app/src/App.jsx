@@ -1,3 +1,5 @@
+import "./App.css";
+
 import LikeApp from "./components/Like";
 
 // import Crud from "./components/Crud";

@@ -1,9 +1,9 @@
 import React from "react";
 
-function customButton(type) {
+function customButton(type, className) {
   return (
     <div>
-      <button>{type}</button>
+      <button className={className}>{type}</button>
     </div>
   );
 }

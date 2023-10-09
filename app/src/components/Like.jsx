@@ -6,16 +6,7 @@ const LikeApp = () => {
   const [likes, setlikes] = useState(initiallikes);
   const [text, setText] = useState("");
   const [editIndex, setEditIndex] = useState(0);
-  const [editText, setEditText] = useState();
-
-  // Load likes from local storage when the component mounts
-  //   useEffect(() => {
-  // const initiallikes = JSON.parse(localStorage.getItem("likes"));
-  //   },);
-  //   function getlocalstorage(){
-  //     const initiallikes = JSON.parse(localStorage.getItem("likes"));
-
-  //   }
+  const [editText, setEditText] = useState("");
 
   useEffect(() => {
     localStorage.setItem("likes", JSON.stringify(likes));
@@ -50,8 +41,6 @@ const LikeApp = () => {
   };
   function onchange(e) {
     setText(e.target.value);
-    let updateshow = e.target.value;
-    console.log(updateshow);
   }
 
   return (

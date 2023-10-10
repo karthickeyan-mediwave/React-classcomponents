@@ -1,13 +1,11 @@
 import "./App.css";
+import Nav from "./components/Nav";
 
-import LikeApp from "./components/Like";
-
-// import Crud from "./components/Crud";
 function App() {
   return (
-    <>
-      <LikeApp />
-    </>
+    <div>
+      <Nav />
+    </div>
   );
 }
 

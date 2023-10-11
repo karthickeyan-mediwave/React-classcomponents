@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import Hometweety from "./Hometweety";
 import CustomForm from "./Form";
 import { v4 as uuidv4 } from "uuid";
 
 function Nav() {
   const [isShowForm, setIsShowForm] = useState(false);
   const [addTweet, setAddTweet] = useState([]);
+  const [searchVal, setSearchVal] = useState("");
+
+  function formatTime() {
+    const date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    const amOrPm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return `${hours}:${minutes} ${amOrPm}`;
+  }
   const getCurrentDateFormatted = () => {
     const currentDate = new Date();
     const day = currentDate.getDate();
@@ -18,16 +32,90 @@ function Nav() {
     return formattedDate;
   };
   function handleAddTweet(tweet) {
-    setAddTweet((prevTweet) => {
-      const data = {
-        id: uuidv4(),
-        tweet: tweet,
-        date: getCurrentDateFormatted(),
-      };
-      return [...prevTweet, data];
-    });
+    const data = {
+      id: uuidv4(),
+      tweet: tweet,
+      date: getCurrentDateFormatted(),
+      time: formatTime(),
+      datetime: new Date(),
+    };
+
+    const updatedTweets = [...addTweet, data].sort(
+      (a, b) => b.datetime - a.datetime
+    );
+
+    setAddTweet(updatedTweets);
+    console.log(updatedTweets);
     setIsShowForm(false);
   }
+  const productList = [
+    "blue pant",
+    "black pant",
+    "blue shirt",
+    "black shoes",
+    "brown shoes",
+    "white pant",
+    "white shoes",
+    "red shirt",
+    "gray pant",
+    "white shirt",
+    "golden shoes",
+    "dark pant",
+    "pink shirt",
+    "yellow pant",
+  ];
+  // const [products, setProducts] = useState(productList);
+  function handleSearchClick() {
+    // if (searchVal === "") {
+    //   // setProducts(productList);
+    //   setAddTweet(addTweet);
+    //   return;
+    // }
+    // const filterBySearch = addTweet.filter((item) => {
+    //   if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
+    //     return item;
+    //   }
+    // });
+    // // setProducts(filterBySearch);
+    // setAddTweet(filterBySearch);
+  }
+
+  // function onChange(value) {
+  //   const searchTweet = [...addTweet];
+  //   setSearchVal(value);
+  //   if (searchVal === "") {
+  //     // setProducts(productList);
+  //     console.log("inside");
+  //     setAddTweet(addTweet);
+
+  //     return;
+  //   }
+  //   const filterBySearch = searchTweet.filter((item) => {
+  //     if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
+  //       return item;
+  //     }
+  //   });
+  //   // setProducts(filterBySearch);
+  //   setAddTweet(filterBySearch);
+  // }
+  useEffect(() => {
+    const searchTweet = [...addTweet];
+    const filterBySearch = searchTweet.filter((item) => {
+      if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
+        return item;
+      }
+    });
+    if (searchVal === "") {
+      // setProducts(productList);
+      console.log("inside");
+      setAddTweet(addTweet);
+      console.log(addTweet);
+
+      return;
+    }
+    // setProducts(filterBySearch);
+    setAddTweet(filterBySearch);
+  }, [searchVal]);
 
   return (
     <div>
@@ -51,8 +139,14 @@ function Nav() {
       ) : (
         <>
           <div className="search">
-            <input type="text" placeholder="Search here ....." />
-            <button className="Search-btn">Search</button>
+            <input
+              type="text"
+              placeholder="Search here ....."
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+            <button className="Search-btn" onClick={handleSearchClick}>
+              Search
+            </button>
           </div>
           <div class="tweet-parent"></div>
           <div class="tweet-container">
@@ -65,13 +159,28 @@ function Nav() {
               {addTweet.map((item, index) => {
                 return (
                   <div key={index} id={item.id} className="card">
-                    <p>{item.tweet}</p>
+                    <div className="tweet-para">
+                      <p>{item.tweet}</p>
+                    </div>
                     <div className="emoji-head">
                       <div className="emoji">
-                        <span className="like">&#128077;</span>
-                        <span>&#128078;</span>
+                        <button
+                          className="like"
+                          id={`like-${item.id}`}
+                          onClick={() => handleLike(`like-${item.id}`)}
+                        >
+                          &#128077;
+                        </button>
+                        <button
+                          id={`dislike-${item.id}`}
+                          onClick={() => handleLike(`dislike-${item.id}`)}
+                        >
+                          &#128078;
+                        </button>
                       </div>
-                      <div className="date">{item.date}, 12:00 AM</div>
+                      <div className="date">
+                        {item.date}, {item.time}
+                      </div>
                     </div>
                   </div>
                 );

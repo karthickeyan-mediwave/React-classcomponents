@@ -76,6 +76,7 @@ a {
   padding: 8px 20px;
   border-radius: 10px;
   margin: 0 8px;
+  cursor: pointer;
 }
 .tweet-parent {
   background-color: #f5f2f2;
@@ -112,10 +113,14 @@ a {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
-.card p {
+.tweet-para {
+  width: 100%;
+}
+.tweet-para p {
   padding: 15px 30px;
   font-size: 18px;
   font-weight: 300;
+  width: 200px !important;
 }
 .emoji-head {
   padding: 4px 10px;
@@ -183,6 +188,9 @@ form .row input::placeholder {
 .form-add {
   width: 50px;
   margin: 10px auto;
+}
+.error {
+  color: red;
 }
 .back {
   margin-top: 25px;

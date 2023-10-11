@@ -4,9 +4,13 @@ import CustomForm from "./Form";
 import { v4 as uuidv4 } from "uuid";
 
 function Nav() {
+  const initialtweets = JSON.parse(localStorage.getItem("tweets"));
+  // console.log(initialtweets);
+
   const [isShowForm, setIsShowForm] = useState(false);
-  const [addTweet, setAddTweet] = useState([]);
+  const [addTweet, setAddTweet] = useState(initialtweets);
   const [searchVal, setSearchVal] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
 
   function formatTime() {
     const date = new Date();
@@ -48,23 +52,7 @@ function Nav() {
     console.log(updatedTweets);
     setIsShowForm(false);
   }
-  const productList = [
-    "blue pant",
-    "black pant",
-    "blue shirt",
-    "black shoes",
-    "brown shoes",
-    "white pant",
-    "white shoes",
-    "red shirt",
-    "gray pant",
-    "white shirt",
-    "golden shoes",
-    "dark pant",
-    "pink shirt",
-    "yellow pant",
-  ];
-  // const [products, setProducts] = useState(productList);
+
   function handleSearchClick() {
     // if (searchVal === "") {
     //   // setProducts(productList);
@@ -100,22 +88,28 @@ function Nav() {
   // }
   useEffect(() => {
     const searchTweet = [...addTweet];
+
     const filterBySearch = searchTweet.filter((item) => {
       if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
         return item;
       }
     });
     if (searchVal === "") {
-      // setProducts(productList);
       console.log("inside");
-      setAddTweet(addTweet);
-      console.log(addTweet);
+      setAddTweet(initialtweets);
+      console.log(initialtweets);
 
       return;
     }
-    // setProducts(filterBySearch);
-    setAddTweet(filterBySearch);
+    // setAddTweet(filterBySearch);
+    console.log(filterBySearch);
+    setFilteredResults(filterBySearch);
+
+    // setAddTweet(addTweet);
   }, [searchVal]);
+  useEffect(() => {
+    localStorage.setItem("tweets", JSON.stringify(addTweet));
+  });
 
   return (
     <div>
@@ -186,6 +180,37 @@ function Nav() {
                 );
               })}
             </div>
+          </div>
+          <div className="tweet-records">
+            {filteredResults.map((item, index) => {
+              return (
+                <div key={index} id={item.id} className="card">
+                  <div className="tweet-para">
+                    <p>{item.tweet}</p>
+                  </div>
+                  <div className="emoji-head">
+                    <div className="emoji">
+                      <button
+                        className="like"
+                        id={`like-${item.id}`}
+                        onClick={() => handleLike(`like-${item.id}`)}
+                      >
+                        &#128077;
+                      </button>
+                      <button
+                        id={`dislike-${item.id}`}
+                        onClick={() => handleLike(`dislike-${item.id}`)}
+                      >
+                        &#128078;
+                      </button>
+                    </div>
+                    <div className="date">
+                      {item.date}, {item.time}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </>
       )}

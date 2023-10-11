@@ -59,7 +59,8 @@ a {
   width: 40%;
   height: 40px;
 }
-.search input:focus {
+.search input:focus,
+.row input:focus {
   border-color: #00a793;
   box-shadow: 0 0 10px #00a793;
   outline: none;
@@ -140,9 +141,6 @@ a {
 .date {
   font-size: 12px;
 }
-::selection {
-  background: rgba(26, 188, 156, 0.3);
-}
 .container {
   max-width: 440px;
   padding: 0 20px;
@@ -181,7 +179,7 @@ a {
   border-radius: 6px;
 }
 form .row input::placeholder {
-  color: #999;
+  color: black;
   text-align: center;
 }
 
@@ -205,8 +203,10 @@ form .row input::placeholder {
 .submit-btn {
   background: #16a085;
   border: none;
-  padding: 10px 24px;
-  border-radius: 5px;
+  padding: 8px 20px;
+  border-radius: 10px;
+  width: 80px;
+  cursor: pointer;
 }
 @media only screen and (max-width: 992px) {
   .tweet-records {

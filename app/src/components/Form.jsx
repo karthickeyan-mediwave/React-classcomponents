@@ -33,13 +33,15 @@ function CustomForm({ addTweet }) {
             <div className="row">
               <input
                 type="text"
-                placeholder="Enter the tweet here and characters upto 140 only..."
+                placeholder="Enter the tweet here ...."
                 required
                 onChange={(e) => setTweet(e.target.value)}
               />
             </div>
             <div className="error">{isSubmit.error}</div>
-
+            <div className="note">
+              <span> NOTE-Please enter character upto 140 only</span>
+            </div>
             <div className="form-add">
               <button
                 className="submit-btn"

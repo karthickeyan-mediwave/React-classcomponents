@@ -81,12 +81,12 @@ a {
 }
 .tweet-parent {
   background-color: #f5f2f2;
-  height: 700px;
+  height: 1000px;
   position: relative;
 }
 .tweet-container {
   padding: 110px;
-  margin-top: 50px;
+  margin-top: 100px;
   /* background-color: rgba(247, 247, 249, 1); */
   border-radius: 20px;
   background: url(https://www.mediwavedigital.com/_next/static/media/oruworks.e62439ad.svg);
@@ -133,8 +133,17 @@ a {
 .emoji span {
   display: inline-block;
 }
+.emoji button {
+  background: none;
+  border: none;
+}
 .like {
-  border: 1px solid #00a793;
+  border: 1px solid #00a793 !important;
+  border-radius: 5px;
+  padding: 2px;
+}
+.unlike {
+  border: 1px solid red !important;
   border-radius: 5px;
   padding: 2px;
 }
@@ -220,6 +229,13 @@ form .row input::placeholder {
 @media only screen and (max-width: 768px) {
   .tweet-container {
     background: none;
+    padding: 60px;
+  }
+  .search input {
+    width: 80%;
+  }
+  .Search-btn {
+    margin-top: 15px;
   }
 }
 @media only screen and (max-width: 600px) {

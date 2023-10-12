@@ -40,7 +40,12 @@ function CustomForm({ addTweet }) {
             </div>
             <div className="error">{isSubmit.error}</div>
             <div className="note">
-              <span> NOTE-Please enter character upto 140 only</span>
+              <h4>
+                NOTE-
+                <span className="note-para">
+                  Please enter character upto 140 only
+                </span>
+              </h4>
             </div>
             <div className="form-add">
               <button

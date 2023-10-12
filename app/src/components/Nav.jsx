@@ -8,7 +8,7 @@ function Nav() {
   const [addTweet, setAddTweet] = useState(getFromLocalstorage());
   const [searchVal, setSearchVal] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
-  const [isNotfound, setIsNotfound] = useState(false);
+  const [isNotfound, setIsNotfound] = useState({ msg: "", error: false });
 
   function getFromLocalstorage() {
     const initialtweets = JSON.parse(localStorage.getItem("tweets"));
@@ -61,22 +61,11 @@ function Nav() {
 
     console.log(updatedTweets);
     setIsShowForm(false);
+    setIsNotfound({ msg: "", error: false });
   }
 
   function handleSearchClick() {
-    const filterBySearch = addTweet.filter((item) => {
-      if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
-        return item;
-      }
-    });
-    if (searchVal === "") {
-      console.log("inside");
-      setFilteredResults(getFromLocalstorage());
-
-      return;
-    }
-    console.log(filterBySearch);
-    setFilteredResults(filterBySearch);
+    setSearchVal("");
   }
 
   // function onChange(value) {
@@ -102,18 +91,27 @@ function Nav() {
     const filterBySearch = addTweet.filter((item) => {
       if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
         return item;
-      } else {
-        setIsNotfound(true);
       }
     });
     if (searchVal === "") {
-      console.log("inside");
+      console.log("useeffect");
       setFilteredResults(getFromLocalstorage());
-
-      return;
     }
     console.log(filterBySearch);
     setFilteredResults(filterBySearch);
+
+    if (addTweet.length != 0) {
+      if (filterBySearch.length === 0) {
+        setIsNotfound({ msg: "Result Not Found", error: true });
+      } else {
+        setIsNotfound({ msg: "", error: false });
+      }
+    } else {
+      setIsNotfound({
+        msg: " No tweet now. Make a tweet and check here",
+        error: true,
+      });
+    }
   }, [searchVal]);
 
   useEffect(() => {
@@ -121,13 +119,15 @@ function Nav() {
   });
   const handleLikeClick = (id) => {
     const updatedTweets = filteredResults.map((tweet) =>
-      tweet.id === id ? { ...tweet, like: true, dislike: false } : tweet
+      tweet.id === id ? { ...tweet, like: !tweet.like, dislike: false } : tweet
     );
     setFilteredResults(updatedTweets);
   };
   const handleDislikeClick = (id) => {
     const updatedTweets = filteredResults.map((tweet) =>
-      tweet.id === id ? { ...tweet, dislike: true, like: false } : tweet
+      tweet.id === id
+        ? { ...tweet, dislike: !tweet.dislike, like: false }
+        : tweet
     );
     setFilteredResults(updatedTweets);
   };
@@ -135,6 +135,9 @@ function Nav() {
   return (
     <div>
       <div className="navbar">
+        <div>
+          <h1>Tweety</h1>
+        </div>
         <div className="link">
           <button className="home-btn" onClick={() => setIsShowForm(false)}>
             Home
@@ -142,9 +145,6 @@ function Nav() {
           <button className="addform-btn" onClick={() => setIsShowForm(true)}>
             Add Form
           </button>
-        </div>
-        <div>
-          <h1>Tweety</h1>
         </div>
       </div>
       {isShowForm ? (
@@ -157,18 +157,23 @@ function Nav() {
             <input
               type="text"
               placeholder="Search here ....."
+              value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
             />
-            <button className="Search-btn" onClick={handleSearchClick}>
-              Search
+
+            <button className="search-btn" onClick={handleSearchClick}>
+              clear
             </button>
           </div>
-          <div class="tweet-parent"></div>
-          <div class="tweet-container">
-            <div class="tweet-list-title">
+          {/* <div className="tweet-parent"></div> */}
+          <div className="tweet-container">
+            <div className="tweet-list-title">
               <h2>
-                List of <span class="tweet-list">Tweet</span>
+                List of <span className="tweet-list">Tweet</span>
               </h2>
+              {isNotfound.error ? (
+                <div className="error">{isNotfound.msg}</div>
+              ) : null}
             </div>
             {/* <div className="tweet-records">
               {addTweet.map((item, index) => {

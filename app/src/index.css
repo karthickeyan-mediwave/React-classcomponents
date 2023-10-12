@@ -43,7 +43,7 @@ h1 {
   align-items: center;
   justify-content: end;
 }
-a {
+.link a {
   text-decoration: none;
   margin: 10px;
   color: white;
@@ -209,6 +209,39 @@ form .row input::placeholder {
   border-radius: 10px;
   width: 80px;
   cursor: pointer;
+}
+.navigationButtons {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding-top: 40px;
+}
+
+.navigationButtons a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #00a793;
+  color: red;
+  cursor: pointer;
+}
+
+.navigationButtons a:hover {
+  color: white;
+  background-color: red;
+}
+
+.navigationActive a {
+  color: white;
+  background-color: red;
+}
+
+.navigationDisabled a {
+  color: grey;
+  background-color: grey;
 }
 @media only screen and (max-width: 992px) {
   .tweet-records {

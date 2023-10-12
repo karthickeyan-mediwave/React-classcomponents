@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import CustomForm from "./Form";
 import { v4 as uuidv4 } from "uuid";
+import ReactPaginate from "react-paginate";
 
-function Nav() {
+function Nav(itemsPerPage) {
   const [isShowForm, setIsShowForm] = useState(false);
   const [addTweet, setAddTweet] = useState(getFromLocalstorage());
   const [searchVal, setSearchVal] = useState("");
@@ -131,6 +132,83 @@ function Nav() {
     );
     setFilteredResults(updatedTweets);
   };
+  function Items({ filteredResults }) {
+    return (
+      <>
+        {filteredResults.map((item, index) => {
+          return (
+            <div key={index} id={item.id} className="card">
+              <div className="tweet-para">
+                <p>{item.tweet}</p>
+              </div>
+              <div className="emoji-head">
+                <div className="emoji">
+                  <button
+                    className={item.like ? "like" : ""}
+                    id={`like-${item.id}`}
+                    onClick={() => handleLikeClick(item.id)}
+                  >
+                    &#128077;
+                  </button>
+                  <button
+                    className={item.dislike ? "unlike" : ""}
+                    id={`dislike-${item.id}`}
+                    onClick={() => handleDislikeClick(item.id)}
+                  >
+                    &#128078;
+                  </button>
+                </div>
+                <div className="date">
+                  {item.date}, {item.time}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  }
+  const [page, setPage] = useState(0);
+  // const [employees, setEmployees] = useState(getFromLocalstorage());
+
+  const tweetPerPage = 3;
+  const numberOftweetVistited = page * tweetPerPage;
+  const totalPages = Math.ceil(filteredResults.length / tweetPerPage);
+  const changePage = ({ selected }) => {
+    setPage(selected);
+  };
+  const displaytweet = filteredResults
+    .slice(numberOftweetVistited, numberOftweetVistited + tweetPerPage)
+    .map((item, index) => {
+      return (
+        <div key={index} id={item.id} className="card">
+          <div className="tweet-para">
+            <p>{item.tweet}</p>
+          </div>
+          <div className="emoji-head">
+            <div className="emoji">
+              <button
+                className={item.like ? "like" : ""}
+                id={`like-${item.id}`}
+                onClick={() => handleLikeClick(item.id)}
+              >
+                &#128077;
+              </button>
+              <button
+                className={item.dislike ? "unlike" : ""}
+                id={`dislike-${item.id}`}
+                onClick={() => handleDislikeClick(item.id)}
+              >
+                &#128078;
+              </button>
+            </div>
+            <div className="date">
+              {item.date}, {item.time}
+            </div>
+          </div>
+        </div>
+      );
+    });
 
   return (
     <div>
@@ -207,40 +285,32 @@ function Nav() {
               })}
             </div> */}
             <div className="tweet-records">
-              {filteredResults.map((item, index) => {
-                return (
-                  <div key={index} id={item.id} className="card">
-                    <div className="tweet-para">
-                      <p>{item.tweet}</p>
-                    </div>
-                    <div className="emoji-head">
-                      <div className="emoji">
-                        <button
-                          className={item.like ? "like" : ""}
-                          id={`like-${item.id}`}
-                          onClick={() => handleLikeClick(item.id)}
-                        >
-                          &#128077;
-                        </button>
-                        <button
-                          className={item.dislike ? "unlike" : ""}
-                          id={`dislike-${item.id}`}
-                          onClick={() => handleDislikeClick(item.id)}
-                        >
-                          &#128078;
-                        </button>
-                      </div>
-                      <div className="date">
-                        {item.date}, {item.time}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              <Items filteredResults={filteredResults} />
+              {/* <ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                // onPageChange={handlePageClick}
+                // pageRangeDisplayed={5}
+                // pageCount={pageCount}
+                previousLabel="< previous"
+                // renderOnZeroPageCount={null}
+              /> */}
             </div>
           </div>
         </>
       )}
+      <div className="tweet-records">{displaytweet}</div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        pageCount={totalPages}
+        onPageChange={changePage}
+        containerClassName={"navigationButtons"}
+        previousLinkClassName={"previousButton"}
+        nextLinkClassName={"nextButton"}
+        disabledClassName={"navigationDisabled"}
+        activeClassName={"navigationActive"}
+      />
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import "./App.css";
-import Nav from "./components/Nav";
+import Home from "./components/Home";
+import PaginatedItems from "./components/PaginatedItems";
 
 function App() {
   return (
     <div>
-      <Nav />
+      <Home />
+      <PaginatedItems itemsPerPage={4} />
     </div>
   );
 }

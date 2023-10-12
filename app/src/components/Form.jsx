@@ -13,7 +13,7 @@ function CustomForm({ addTweet }) {
       setIsSubmit({ error: "", bool: true });
     }
   }, [tweet]);
-
+  /// form submit function
   function handleFormSumbit(e) {
     e.preventDefault();
     if (!isSubmit.bool) {

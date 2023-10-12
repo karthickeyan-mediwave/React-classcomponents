@@ -6,7 +6,6 @@ function App() {
   return (
     <div>
       <Home />
-      <PaginatedItems itemsPerPage={4} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import CustomForm from "./Form";
 import { v4 as uuidv4 } from "uuid";
 import ReactPaginate from "react-paginate";
 
-function Nav(itemsPerPage) {
+function Nav() {
   const [isShowForm, setIsShowForm] = useState(false);
   const [addTweet, setAddTweet] = useState(getFromLocalstorage());
   const [searchVal, setSearchVal] = useState("");
@@ -19,17 +19,15 @@ function Nav(itemsPerPage) {
       return [];
     }
   }
+  /// function for date format
   function formatTime() {
     const date = new Date();
     let hours = date.getHours();
     let minutes = date.getMinutes();
     const amOrPm = hours >= 12 ? "PM" : "AM";
-
     hours = hours % 12;
     hours = hours ? hours : 12;
-
     minutes = minutes < 10 ? "0" + minutes : minutes;
-
     return `${hours}:${minutes} ${amOrPm}`;
   }
   const getCurrentDateFormatted = () => {
@@ -42,6 +40,7 @@ function Nav(itemsPerPage) {
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
     return formattedDate;
   };
+  /// function for add data
   function handleAddTweet(tweet) {
     const data = {
       id: uuidv4(),
@@ -52,43 +51,20 @@ function Nav(itemsPerPage) {
       like: false,
       dislike: false,
     };
-
     const updatedTweets = [...addTweet, data].sort(
       (a, b) => b.datetime - a.datetime
     );
-
     setAddTweet(updatedTweets);
     setFilteredResults(updatedTweets);
-
     console.log(updatedTweets);
     setIsShowForm(false);
     setIsNotfound({ msg: "", error: false });
   }
-
+  // for filter function
   function handleSearchClick() {
     setSearchVal("");
   }
-
-  // function onChange(value) {
-  //   const searchTweet = [...addTweet];
-  //   setSearchVal(value);
-  //   if (searchVal === "") {
-  //     // setProducts(productList);
-  //     console.log("inside");
-  //     setAddTweet(addTweet);
-
-  //     return;
-  //   }
-  //   const filterBySearch = searchTweet.filter((item) => {
-  //     if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
-  //       return item;
-  //     }
-  //   });
-  //   // setProducts(filterBySearch);
-  //   setAddTweet(filterBySearch);
-  // }
   useEffect(() => {
-    // const searchTweet = [...addTweet];
     const filterBySearch = addTweet.filter((item) => {
       if (item.tweet.toLowerCase().includes(searchVal.toLowerCase())) {
         return item;
@@ -114,10 +90,11 @@ function Nav(itemsPerPage) {
       });
     }
   }, [searchVal]);
-
+  /// local storage
   useEffect(() => {
     localStorage.setItem("tweets", JSON.stringify(addTweet));
   });
+  /// function for like and dislike
   const handleLikeClick = (id) => {
     const updatedTweets = filteredResults.map((tweet) =>
       tweet.id === id ? { ...tweet, like: !tweet.like, dislike: false } : tweet
@@ -132,46 +109,9 @@ function Nav(itemsPerPage) {
     );
     setFilteredResults(updatedTweets);
   };
-  function Items({ filteredResults }) {
-    return (
-      <>
-        {filteredResults.map((item, index) => {
-          return (
-            <div key={index} id={item.id} className="card">
-              <div className="tweet-para">
-                <p>{item.tweet}</p>
-              </div>
-              <div className="emoji-head">
-                <div className="emoji">
-                  <button
-                    className={item.like ? "like" : ""}
-                    id={`like-${item.id}`}
-                    onClick={() => handleLikeClick(item.id)}
-                  >
-                    &#128077;
-                  </button>
-                  <button
-                    className={item.dislike ? "unlike" : ""}
-                    id={`dislike-${item.id}`}
-                    onClick={() => handleDislikeClick(item.id)}
-                  >
-                    &#128078;
-                  </button>
-                </div>
-                <div className="date">
-                  {item.date}, {item.time}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </>
-    );
-  }
+  // for pagination
   const [page, setPage] = useState(0);
-  // const [employees, setEmployees] = useState(getFromLocalstorage());
-
-  const tweetPerPage = 3;
+  const tweetPerPage = 6;
   const numberOftweetVistited = page * tweetPerPage;
   const totalPages = Math.ceil(filteredResults.length / tweetPerPage);
   const changePage = ({ selected }) => {
@@ -238,12 +178,10 @@ function Nav(itemsPerPage) {
               value={searchVal}
               onChange={(e) => setSearchVal(e.target.value)}
             />
-
             <button className="search-btn" onClick={handleSearchClick}>
               clear
             </button>
           </div>
-          {/* <div className="tweet-parent"></div> */}
           <div className="tweet-container">
             <div className="tweet-list-title">
               <h2>
@@ -253,64 +191,21 @@ function Nav(itemsPerPage) {
                 <div className="error">{isNotfound.msg}</div>
               ) : null}
             </div>
-            {/* <div className="tweet-records">
-              {addTweet.map((item, index) => {
-                return (
-                  <div key={index} id={item.id} className="card">
-                    <div className="tweet-para">
-                      <p>{item.tweet}</p>
-                    </div>
-                    <div className="emoji-head">
-                      <div className="emoji">
-                        <button
-                          className="like"
-                          id={`like-${item.id}`}
-                          onClick={() => handleLike(`like-${item.id}`)}
-                        >
-                          &#128077;
-                        </button>
-                        <button
-                          id={`dislike-${item.id}`}
-                          onClick={() => handleLike(`dislike-${item.id}`)}
-                        >
-                          &#128078;
-                        </button>
-                      </div>
-                      <div className="date">
-                        {item.date}, {item.time}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div> */}
-            <div className="tweet-records">
-              <Items filteredResults={filteredResults} />
-              {/* <ReactPaginate
-                breakLabel="..."
-                nextLabel="next >"
-                // onPageChange={handlePageClick}
-                // pageRangeDisplayed={5}
-                // pageCount={pageCount}
-                previousLabel="< previous"
-                // renderOnZeroPageCount={null}
-              /> */}
-            </div>
+            <div className="tweet-records">{displaytweet}</div>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={totalPages}
+              onPageChange={changePage}
+              containerClassName={"navigationButtons"}
+              previousLinkClassName={"previousButton"}
+              nextLinkClassName={"nextButton"}
+              disabledClassName={"navigationDisabled"}
+              activeClassName={"navigationActive"}
+            />
           </div>
         </>
       )}
-      <div className="tweet-records">{displaytweet}</div>
-      <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={totalPages}
-        onPageChange={changePage}
-        containerClassName={"navigationButtons"}
-        previousLinkClassName={"previousButton"}
-        nextLinkClassName={"nextButton"}
-        disabledClassName={"navigationDisabled"}
-        activeClassName={"navigationActive"}
-      />
     </div>
   );
 }

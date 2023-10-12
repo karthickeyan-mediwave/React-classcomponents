@@ -22,12 +22,6 @@ h1 {
     border-bottom: 1px solid #00a793;
   }
 }
-ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
 .home-btn,
 .addform-btn {
   color: #00a793;
@@ -123,7 +117,7 @@ ul {
   background-repeat: no-repeat;
   background-position: left 110px top 72px;
   /* position: absolute;
-  top: 100px; */
+    top: 100px; */
 }
 @media (max-width: 1000px) {
   .tweet-container {
